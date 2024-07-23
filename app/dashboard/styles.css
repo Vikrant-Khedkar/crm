@@ -1,0 +1,486 @@
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #818cf8;
+  --background-color: #f3f4f6;
+  --card-background: #ffffff;
+  --text-color: #1f2937;
+  --text-light: #6b7280;
+  --border-color: #e5e7eb;
+  --high-importance: #ef4444;
+  --medium-importance: #f59e0b;
+  --low-importance: #10b981;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: var(--navbar-height);
+  background: var(--card-background);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--background-color);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  margin-left: 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.new-connection-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-connection-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.content-wrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--card-background);
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}
+
+.sidebar-toggle {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.sidebar-toggle:hover {
+  color: var(--primary-color);
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.connections-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.connection-card {
+  background: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.connection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.connection-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar.large {
+  width: 96px;
+  height: 96px;
+}
+
+.connection-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.connection-info p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.connection-body {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.connection-body p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.connection-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.importance {
+  color: var(--medium-importance);
+}
+
+.importance.high {
+  color: var(--high-importance);
+}
+
+.importance.low {
+  color: var(--low-importance);
+}
+
+.connection-card.high {
+  border-left: 4px solid var(--high-importance);
+}
+
+.connection-card.medium {
+  border-left: 4px solid var(--medium-importance);
+}
+
+.connection-card.low {
+  border-left: 4px solid var(--low-importance);
+}
+
+.connection-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-icon {
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.action-icon:hover {
+  color: var(--primary-color);
+}
+
+.connection-body {
+  margin-top: 1rem;
+}
+
+.connection-dates {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.connection-dates strong {
+  display: block;
+  color: var(--text-light);
+}
+
+.connection-notes strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+}
+
+.connection-notes p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+input[type="text"], input[type="date"], textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.detailed-view-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.detailed-view {
+  background: var(--card-background);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--text-color);
+}
+
+.detailed-view h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.detailed-view h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.detailed-view ul {
+  padding-left: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.expanded {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .connections-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color 0.3s ease;
+  align-self: flex-start;
+}
+
+.edit-btn:hover {
+  color: var(--text-color);
+}
+
+.date-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+textarea.edit-input {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-end;
+  margin-top: 1rem;
+}
+
+.save-btn:hover {
+  background-color: var(--secondary-color);
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-btn, .edit-btn, .delete-btn {
+  padding: 10px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.ai-suggestion {
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.ai-suggestion h4 {
+  margin: 0 0 5px 0;
+  font-size: 0.9em;
+}
+
+.ai-suggestion p {
+  margin: 0;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.ai-suggestion button {
+  font-size: 0.8em;
+  padding: 2px 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ai-suggestion button:hover {
+  background-color: #0056b3;
+}
+
+.talk-dates {
+  margin-top: 10px; /* Space between last talked about and dates */
+}
+
+.date-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 8px; /* Adjust spacing as needed */
+}
