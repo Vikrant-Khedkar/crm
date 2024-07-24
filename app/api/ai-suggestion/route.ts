@@ -34,25 +34,16 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error getting AI suggestion:', error)
 
-    // Check if error is an instance of Error
-    if (error instanceof Error) {
-      return Response.json(
-        { 
-          error: 'Failed to get AI suggestion', 
-          details: error.message, 
-          stack: error.stack 
-        }, 
-        { status: 500 }
-      );
-    } else {
-      // Handle unexpected error types
-      return Response.json(
-        { 
-          error: 'Failed to get AI suggestion', 
-          details: 'An unknown error occurred' 
-        }, 
-        { status: 500 }
-      );
-    }
+    // Use type assertion to treat error as an Error
+    const err = error as Error;
+
+    return Response.json(
+      { 
+        error: 'Failed to get AI suggestion', 
+        details: err.message, // Access message safely
+        stack: err.stack // Access stack safely
+      }, 
+      { status: 500 }
+    );
   }
 }
