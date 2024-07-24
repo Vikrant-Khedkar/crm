@@ -16,7 +16,7 @@ async function connectToDatabase() {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { userId } = auth(req)
+  const { userId } = auth(); // Call auth without arguments
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
