@@ -89,56 +89,6 @@ body, html {
   overflow: hidden;
 }
 
-.sidebar {
-  width: var(--sidebar-width);
-  background: var(--card-background);
-  transition: width 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar.collapsed {
-  width: var(--sidebar-collapsed-width);
-}
-
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
-}
-
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  color: var(--text-light);
-  transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.sidebar-item:hover, .sidebar-item.active {
-  background-color: var(--background-color);
-  color: var(--primary-color);
-}
-
-.sidebar-toggle {
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  color: var(--text-light);
-  transition: color 0.3s;
-}
-
-.sidebar-toggle:hover {
-  color: var(--primary-color);
-}
-
 .main-content {
   flex-grow: 1;
   padding: 2rem;
@@ -362,19 +312,6 @@ textarea {
     margin-top: 1rem;
   }
 
-  .sidebar {
-    position: fixed;
-    top: var(--navbar-height);
-    left: 0;
-    bottom: 0;
-    z-index: 1000;
-    transform: translateX(-100%);
-  }
-
-  .sidebar.expanded {
-    transform: translateX(0);
-  }
-
   .main-content {
     margin-left: 0;
   }
@@ -384,60 +321,7 @@ textarea {
   }
 }
 
-.edit-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-light);
-  transition: color 0.3s ease;
-  align-self: flex-start;
-}
-
-.edit-btn:hover {
-  color: var(--text-color);
-}
-
-.date-inputs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.edit-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-textarea.edit-input {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.save-btn {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: flex-end;
-  margin-top: 1rem;
-}
-
-.save-btn:hover {
-  background-color: var(--secondary-color);
-}
-.action-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.save-btn, .edit-btn, .delete-btn {
+.edit-btn, .save-btn, .delete-btn {
   padding: 10px 15px;
   margin-right: 10px;
   cursor: pointer;
@@ -476,11 +360,55 @@ textarea.edit-input {
 }
 
 .talk-dates {
-  margin-top: 10px; /* Space between last talked about and dates */
+  margin-top: 10px;
 }
 
 .date-icon {
   display: flex;
   align-items: center;
-  margin-right: 8px; /* Adjust spacing as needed */
+  margin-right: 8px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+}
+
+.sidebar h2 {
+  margin: 0 0 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar li:hover {
+  background: #f0f0f0;
 }

@@ -9,13 +9,13 @@ import {
 import './styles.css';
 
 const Dashboard = () => {
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
   const [activeView, setActiveView] = useState('connections');
   const [connections, setConnections] = useState([]);
   const [selectedConnection, setSelectedConnection] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [aiSuggestions, setAiSuggestions] = useState({});
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
 
   useEffect(() => {
     fetchConnections();
@@ -26,6 +26,22 @@ const Dashboard = () => {
     const data = await response.json();
     setConnections(data);
   };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar visibility
+  };
+
+  const renderSidebar = () => (
+    <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+      <button className="close-btn" onClick={toggleSidebar}><X size={24} /></button>
+      <h2>Navigation</h2>
+      <ul>
+        <li onClick={() => setActiveView('connections')}>Connections</li>
+        <li onClick={() => setActiveView('settings')}>Settings</li>
+        {/* Add more navigation items as needed */}
+      </ul>
+    </div>
+  );
 
   const addConnection = async () => {
     const newConnection = {
@@ -147,9 +163,14 @@ const Dashboard = () => {
   };
 
   const renderConnections = () => {
+    const filteredConnections = connections.filter(connection =>
+      connection.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      connection.relationship.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
       <div className="connections-list">
-        {connections.map(connection => (
+        {filteredConnections.map(connection => (
           <div key={connection._id} className={`connection-card ${connection.importance}`} onClick={() => openDetailedView(connection)}>
             <div className="connection-header">
               <img src={`https://i.pravatar.cc/48?u=${connection._id}`} alt={connection.name} className="avatar" />
@@ -329,28 +350,29 @@ const Dashboard = () => {
     );
   };
 
-  const toggleSidebar = () => {
-    setSidebarExpanded(!sidebarExpanded);
-  };
-
   return (
     <div className="dashboard">
       <nav className="navbar">
         <div className="nav-left">
-          <button className="toggle-btn" onClick={toggleSidebar}>
-            <ChevronLeft size={24} className={`chevron ${sidebarExpanded ? 'left' : 'right'}`} />
-          </button> */}
-          <h1 className="title">GuruGen</h1>
+          <button onClick={toggleSidebar}>☰</button> {/* Sidebar toggle button */}
+          <img 
+            src="https://avo.blob.core.windows.net/testcontainer/logo.png" 
+            alt="Logo" 
+            style={{ width: '50px', height: 'auto', marginRight: '8px' }}
+          />
+          <span>gurugen</span>
         </div>
         <div className="nav-center">
-          <Search size={24} className="search-icon" />
-          <input
-            type="search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search connections"
-            className="search-input"
-          />
+          <div className="search-bar">
+            <Search size={24} className="search-icon" />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search connections"
+              className="search-input"
+            />
+          </div>
         </div>
         <div className="nav-right">
           <button className="new-connection-btn" onClick={addConnection}>
@@ -360,8 +382,8 @@ const Dashboard = () => {
           <UserButton />
         </div>
       </nav>
+      {renderSidebar()} {/* Render the sidebar */}
       <div className="main-content">
-        {/* {renderSidebar()} */}
         <div className="content">
           {renderConnections()}
           {renderDetailedView()}
