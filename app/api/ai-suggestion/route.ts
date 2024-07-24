@@ -33,6 +33,26 @@ export async function POST(request: Request) {
     return Response.json({ suggestion })
   } catch (error) {
     console.error('Error getting AI suggestion:', error)
-    return Response.json({ error: 'Failed to get AI suggestion', details: error.message, stack: error.stack }, { status: 500 })
+
+    // Check if error is an instance of Error
+    if (error instanceof Error) {
+      return Response.json(
+        { 
+          error: 'Failed to get AI suggestion', 
+          details: error.message, 
+          stack: error.stack 
+        }, 
+        { status: 500 }
+      );
+    } else {
+      // Handle unexpected error types
+      return Response.json(
+        { 
+          error: 'Failed to get AI suggestion', 
+          details: 'An unknown error occurred' 
+        }, 
+        { status: 500 }
+      );
+    }
   }
 }
