@@ -354,7 +354,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <nav className="navbar">
         <div className="nav-left">
-          <button onClick={toggleSidebar}>☰</button> {/* Sidebar toggle button */}
+          <button onClick={toggleSidebar}>☰</button> 
           <img 
             src="https://avo.blob.core.windows.net/testcontainer/logo.png" 
             alt="Logo" 
