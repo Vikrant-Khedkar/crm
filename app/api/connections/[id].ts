@@ -2,7 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { MongoClient, ObjectId } from 'mongodb'
 import { auth } from '@clerk/nextjs/server'
 
-const uri = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error('MONGODB_URI is not defined in the environment variables');
+}
+
 const client = new MongoClient(uri)
 
 async function connectToDatabase() {
@@ -32,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       return res.status(200).json({ success: true })
     } catch (error) {
-      console.error('Error deleting connection:', error)
       return res.status(500).json({ error: 'Internal server error' })
     }
   } else {
