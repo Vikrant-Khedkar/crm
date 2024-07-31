@@ -61,11 +61,18 @@ export async function PUT(request: Request) {
 
   const connection: Connection = await request.json();
   const { _id, ...updateData } = connection;
+  
+  // Ensure _id is defined and create an ObjectId
+  if (!_id) {
+    return NextResponse.json({ error: 'No ID provided' }, { status: 400 });
+  }
+  
   const db = await connectToDatabase();
   const result = await db.collection<Connection>('connections').updateOne(
     { _id: new ObjectId(_id), userId },
     { $set: updateData }
   );
+  
   return NextResponse.json(result);
 }
 
