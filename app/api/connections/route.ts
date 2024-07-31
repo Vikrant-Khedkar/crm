@@ -17,7 +17,7 @@ async function connectToDatabase(): Promise<Db> {
 
 // Define a type for the connection
 interface Connection {
-  _id?: string;
+  _id?: string | ObjectId;
   name: string;
   relationship: string;
   lastContact: string;
@@ -69,7 +69,7 @@ export async function PUT(request: Request) {
   
   const db = await connectToDatabase();
   const result = await db.collection<Connection>('connections').updateOne(
-    { _id: new ObjectId(_id), userId },
+    { _id: typeof _id === 'string' ? new ObjectId(_id) : _id, userId },
     { $set: updateData }
   );
   
